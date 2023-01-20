@@ -10,8 +10,9 @@ fs= 300000; %300kHz
 %V_L = D*Vin + (1-D)*(Vin - Vo);
 D = 1 - Vin./Vo;
 %%
-VoltageGain = Vo - Vin;
-Efficiency = Vo./Vin;
+VoltageGain = Vo./Vin;
+
+Efficiency= 1;
 %%
 figure
 hold on
@@ -22,15 +23,6 @@ xlabel("Duty Cycle")
 title("Voltage Gain vs Duty Cycle Without ESR of the Inductor")
 hold off
 
-%%
-figure
-hold on
-plot(D,Efficiency)
-grid minor
-ylabel("Efficiency")
-xlabel("Duty Cycle")
-title("Efficiency vs Duty Cycle Without ESR of the Inductor")
-hold off
 
 %%
 
@@ -43,8 +35,8 @@ ESR = 0.03; %ohm
 %using found inductor current IL
 %Vin = (1-D)Vo + (Vo./((1-D)*Ro))*ESR
 Vin = Vo* ((1-D) + (1./((1-D)*Ro))*ESR);
-VoltageGainwithESR = Vo - Vin;
-EfficiencywithESR = Vo./Vin;
+VoltageGainwithESR = Vo./Vin;
+EfficiencywithESR = (1-D)./((1-D) + (1./((1-D)*Ro))*ESR);
 %%
 figure
 hold on
@@ -55,6 +47,7 @@ xlabel("Duty Cycle")
 title("Voltage Gain vs Duty Cycle With ESR of the Inductor")
 hold off
 
+
 %%
 figure
 hold on
@@ -63,5 +56,17 @@ grid minor
 ylabel("Efficiency")
 xlabel("Duty Cycle")
 title("Efficiency vs Duty Cycle With ESR of the Inductor")
+hold off
+
+
+
+%%
+figure
+hold on
+plot(D,Efficiency)
+grid minor
+ylabel("Efficiency")
+xlabel("Duty Cycle")
+title("Efficiency vs Duty Cycle Without ESR of the Inductor")
 hold off
 
